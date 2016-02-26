@@ -1,14 +1,16 @@
 package Model;
 
+
 public class Query {
 	public static final int SPECIAL_SESSION_2016	=201590;
 	public static final int SUMMER_II_2016			=201550;
 	public static final int SUMMER_I_2016			=201540;
 	public static final int MINIMESTER_2016			=201530;
+	public static final int SPRING_2016				=201520;
 	
 	public static final String LEVEL_UNDERGRAD							="A";
 	public static final String LEVEL_GRADUATE							="M";
-	public static final String _LEVEL_EVENING_AND_SATURDAY_UNDERGRAD	="E";
+	public static final String LEVEL_EVENING_AND_SATURDAY_UNDERGRAD	="E";
 	
 	public static final String	ANT_01	=	"ANT_01"	;
 	public static final String	BEH_01	=	"BEH_01"	;
@@ -115,7 +117,7 @@ public class Query {
 		this.dept = dept;
 	}
 	private String generateURL(){
-		URL="http://ycpweb.ycp.edu/schedule-of-classes/"+term+level+dept;
+		URL="http://ycpweb.ycp.edu/schedule-of-classes/index.html?term="+term+"&stype="+level+"&dmode=D&dept="+dept;
 		return URL;
 	}
 	
