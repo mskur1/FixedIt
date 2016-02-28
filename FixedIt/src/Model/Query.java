@@ -2,16 +2,19 @@ package Model;
 
 
 public class Query {
+	//term constants
 	public static final int SPECIAL_SESSION_2016	=201590;
 	public static final int SUMMER_II_2016			=201550;
 	public static final int SUMMER_I_2016			=201540;
 	public static final int MINIMESTER_2016			=201530;
 	public static final int SPRING_2016				=201520;
 	
+	//level constants
 	public static final String LEVEL_UNDERGRAD							="A";
 	public static final String LEVEL_GRADUATE							="M";
 	public static final String LEVEL_EVENING_AND_SATURDAY_UNDERGRAD	="E";
 	
+	//department constants
 	public static final String	ANT_01	=	"ANT_01"	;
 	public static final String	BEH_01	=	"BEH_01"	;
 	public static final String	CJA_01	=	"CJA_01"	;
@@ -87,11 +90,21 @@ public class Query {
 	private String dept;
 	private String URL;
 	
+	/**
+	 * Creates a query with the given parameters
+	 * @param term term to query within
+	 * @param level level to query within 
+	 * @param dept department to query within
+	 */
 	public Query(int term, String level,String dept){
 		this.term=term;
 		this.level=level;
 		this.dept=dept;
 	}
+	
+	/**
+	 * Initializes an empty query
+	 */
 	public Query(){
 		term=-1;
 		level=new String();
@@ -116,11 +129,31 @@ public class Query {
 	public void setDept(String dept) {
 		this.dept = dept;
 	}
+	
+	/**
+	 * Create the URL with the query parameters contained within
+	 * this query object. Never needs to be and cannot be called directly.
+	 * @return URL the URL to send query to
+	 * @throws IllegalArgumentException if the query object has
+	 * 			has not been fully/properly initialized.
+	 */
 	private String generateURL(){
-		URL="http://ycpweb.ycp.edu/schedule-of-classes/index.html?term="+term+"&stype="+level+"&dmode=D&dept="+dept;
+		if(term>=0 && level!="" && dept!=""){
+			URL="http://ycpweb.ycp.edu/schedule-of-classes/index.html?term="+term+"&stype="+level+"&dmode=D&dept="+dept;
+		}
+		else{
+			throw new IllegalArgumentException("This query object has not been fully initialized or is missing query parameters.");
+		}
 		return URL;
 	}
 	
+	/**
+	 * Creates a Registrar object as a child of this Query object. This is the only
+	 * method that should be directly called (besides setters and getters).
+	 * @return Registrar a child Registrar of this Query
+	 * @throws IllegalArgumentException if the Query has not been
+	 * 			fully/properly initialized.
+	 */
 	public Registrar createRegistrar(){
 		if(term>=0){
 			if(level!=""){
@@ -132,11 +165,11 @@ public class Query {
 				}
 			}
 			else{
-				throw new IllegalArgumentException("Level not set.");
+				throw new IllegalArgumentException("Level and/or Department not set.");
 			}
 		}
 		else{
-			throw new IllegalArgumentException("Term not set.");
+			throw new IllegalArgumentException("Term and/or Level and/or Department not set.");
 		}
 	}
 	@Override
