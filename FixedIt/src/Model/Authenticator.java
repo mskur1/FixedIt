@@ -1,7 +1,6 @@
 package Model;
 
 import java.math.BigInteger;
-import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -12,18 +11,22 @@ import java.util.regex.Pattern;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.mail.internet.InternetAddress;
 
 public class Authenticator extends EmailSender {
 	public static final String ALLOWED_CHARS="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.-_";
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 												+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-
+	//implement with database
 	public boolean validateNewUser(User newUser){
 		return false;
 	}
+	//implement with database
 	private boolean addNewUserToDB(User newUser){
+		return false;
+	}
+	//implement with database
+	public boolean userExists(String emailAddress){
 		return false;
 	}
 	
@@ -169,11 +172,22 @@ public class Authenticator extends EmailSender {
 		}
 		return bytes;
 	}
+	
+	public Session authorizeUser(String email, String password){
+		if(credentialsMatch(email, password)){
+			return createSession(new User(email));
+		}
+		else{
+			return null;
+		}
+	}
+	
+	//implement with database
 	private boolean credentialsMatch(String email, String password){
 		return false;
 	}
 	private Session createSession(User user){
-		return null;
+		return new Session(user);
 	}
 	
 	public static final String MESSAGE_FIRST_HALF=

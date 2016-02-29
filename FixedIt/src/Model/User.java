@@ -15,31 +15,20 @@ public class User {
 	private int studentStatus, numSchedules;
 	private Query currentQuery;
 	
-	public User(String emailAddress, TreeMap<String, Schedule> schedules, int studentStatus){
-		this.emailAddress=emailAddress;
-		this.schedules=schedules;
-		this.studentStatus=studentStatus;
-		this.numSchedules=schedules.size();
-	}
-	public User(String emailAddress, TreeMap<String, Schedule> schedules){
-		this.emailAddress=emailAddress;
-		this.schedules=schedules;
-		this.studentStatus=-1;
-		this.numSchedules=schedules.size();
-	}
-	public User(String emailAddress, int studentStatus){
-		this.emailAddress=emailAddress;
-		this.studentStatus=studentStatus;
-		this.schedules=new TreeMap<String, Schedule>();
-		this.numSchedules=schedules.size();
-	}
 	public User(String emailAddress){
 		this.emailAddress=emailAddress;
-		this.schedules=new TreeMap<String, Schedule>();
-		this.studentStatus=-1;
+		this.schedules=lookupSchedules();
+		this.studentStatus=lookupStudentStatus();
 		this.numSchedules=schedules.size();
 	}
-	
+	//implement with database
+	private TreeMap<String, Schedule> lookupSchedules(){
+		return null;
+	}
+	//implement with database
+	private int lookupStudentStatus(){
+		return -1;
+	}
 	
 	public void dispose(){
 		emailAddress=null;
@@ -52,9 +41,9 @@ public class User {
 			numSchedules++;
 		}
 	}
-	
+	//implement with database
 	public void deleteAccount(){
-		//Mike, implement this based on how you implement the fake database
+		
 	}
 	
 	public Query newQuery(int term, String level, String dept){

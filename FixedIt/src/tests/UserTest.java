@@ -18,7 +18,7 @@ public class UserTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		user=new User("dwayne@theRockJohnson.com", 0);
+		user=new User("dwayne@theRockJohnson.com");
 		ArrayList<Course> cs=user.newQuery(Query.SPRING_2016, Query.LEVEL_UNDERGRAD, Query.CS_12).createRegistrar().fetch();
 		user.createSchedule("Dwayne \"The Rock\" Johnson's Schedule");
 		user.getSchedule("Dwayne \"The Rock\" Johnson's Schedule").addCourses(cs.get(0), cs.get(1), cs.get(2), cs.get(4));
