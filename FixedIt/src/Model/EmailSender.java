@@ -19,7 +19,7 @@ public class EmailSender {
 	 * @param text the text/HTML to set as the body of the message
 	 * @return true if message is sent successfully, false if message fails to send
 	 */
-	public boolean sendMail(InternetAddress email, String text) {
+	public boolean sendMail(String email, String text) {
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", "smtp.gmail.com");
 		properties.put("mail.smtp.port", "587");
@@ -34,9 +34,10 @@ public class EmailSender {
 
 		javax.mail.Session session = javax.mail.Session.getInstance(properties, auth);
 		Message msg = new MimeMessage(session);
-		InternetAddress[] toAddresses = { email };
-
+		
 		try {
+			InternetAddress address=new InternetAddress(email);
+			InternetAddress[] toAddresses = { address };
 			msg.setRecipients(Message.RecipientType.TO, toAddresses);
 			msg.setSubject("Password Reset Request");
 			msg.setSentDate(new Date());

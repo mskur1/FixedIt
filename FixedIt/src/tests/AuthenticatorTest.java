@@ -14,22 +14,17 @@ public class AuthenticatorTest {
 	private String invalidPass;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp(){
 		validPass="ThisIsAPassword!-._";
 		invalidPass="ThisIsAnInvalidPass/?@#";
 		validPass2="ThisIsAlsoAPassword!!!---...___";
 		a=new Authenticator();
 	}
-
-	@Test
-	public void testSendMail() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSendMailWithAttachment() {
-		fail("Not yet implemented");
-	}
+	
+//	@Test
+//	public void testRequestPasswordReset(){
+//		a.requestPasswordReset("mjones44@ycp.edu");
+//	}
 
 	@Test
 	public void testValidateNewUser() {
@@ -50,15 +45,21 @@ public class AuthenticatorTest {
 
 	@Test
 	public void testIsValidEmailAddress() {
-		fail("Not yet implemented");
+		String validEmail1="email@domain.com";
+		String validEmail2="johnny.appleseed@dadjokes.net";
+		String invalidEmail1="superFakeEmailAddress";
+		String invalidEmail2="Screw email conventions!";
+		
+		assertTrue(a.isValidEmailAddress(validEmail1));
+		assertTrue(a.isValidEmailAddress(validEmail2));
+		assertFalse(a.isValidEmailAddress(invalidEmail1));
+		assertFalse(a.isValidEmailAddress(invalidEmail2));
 	}
 
 	@Test
 	public void testSaltHashPassword() {
 		String hash1=a.saltHashPassword(validPass);
 		String hash2=a.saltHashPassword(validPass2);
-		
-		System.out.println(validPass + " : " + hash1 + "\n" + validPass2 + " : " + hash2);
 		
 		assertFalse(validPass.equals(hash1));
 		assertFalse(validPass.length()==hash1.length());

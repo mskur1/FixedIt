@@ -20,11 +20,6 @@ public class EmailSenderTest {
 
 	@Test
 	public void testSendMail() {
-		try {
-			assertTrue(a.sendMail(new InternetAddress("mjones44@ycp.edu"), PasswordResetPage.baseMessage + PasswordResetPage.endMessage));
-		} catch (AddressException e) {
-			e.printStackTrace();
-		}
+		assertTrue(a.sendMail("mjones44@ycp.edu", ""));
 	}
-
 }

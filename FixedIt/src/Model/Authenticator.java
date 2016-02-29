@@ -5,12 +5,20 @@ import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.mail.internet.InternetAddress;
 
 public class Authenticator extends EmailSender {
-	public static final String allowedChars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.-_";
+	public static final String ALLOWED_CHARS="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.-_";
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+												+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 
 	public boolean validateNewUser(User newUser){
 		return false;
@@ -18,10 +26,17 @@ public class Authenticator extends EmailSender {
 	private boolean addNewUserToDB(User newUser){
 		return false;
 	}
+	
+	/**
+	 * Checks if the password contains any illegal characters
+	 * and is long enough.
+	 * @param password the password to check
+	 * @return true if password meets requirements, false otherwise
+	 */
 	public boolean isValidPassword(String password){
 		if(password.length()>=8){
 			for(int i=0; i<password.length(); i++){
-				if(!allowedChars.contains(Character.toString(password.charAt(i)))){
+				if(!ALLOWED_CHARS.contains(Character.toString(password.charAt(i)))){
 					return false;
 				}
 			}
@@ -31,11 +46,26 @@ public class Authenticator extends EmailSender {
 			return false;
 		}
 	}
+	
+	/**
+	 * Checks the given email address against the accepted
+	 * email address format to make sure that the email is
+	 * in the correct format
+	 * @param emailAddress the address to check
+	 * @return true if it is in email format, false otherwise
+	 */
 	public boolean isValidEmailAddress(String emailAddress){
-		return false;
+		Pattern emailPattern=Pattern.compile(EMAIL_PATTERN);
+		Matcher emailMatcher=emailPattern.matcher(emailAddress);
+		return emailMatcher.matches();
 	}
-	public URL requestPasswordReset(String email){
-		return null;
+	public void requestPasswordReset(String email){
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DATE, 7);
+		PasswordResetPage resetPage=new PasswordResetPage(this, email, cal);
+		String message=resetPage.buildEmail(MESSAGE_FIRST_HALF, MESSAGE_SECOND_HALF);
+		sendMail(email, message);
 	}
 	
 	/**
@@ -145,7 +175,18 @@ public class Authenticator extends EmailSender {
 	private Session createSession(User user){
 		return null;
 	}
-	private URL generatePasswordResetPage(String email){
-		return null;
-	}
+	
+	public static final String MESSAGE_FIRST_HALF=
+			"<h2>Dear FixedIt User,</h2>" +
+			"<h2>&nbsp; &nbsp; &nbsp; You have requested a password reset. " + 
+			"If this is an error or you did not request a password reset, you " + 
+			"can simply ignore this email and your password will remain unchanged. " +
+			"To reset your password, you can click the link below and follow the " +
+			"instructions on your password reset page.</h2>" +
+			"<p>&nbsp;</p>" +
+			"<p>&nbsp;</p>";
+	public static final String MESSAGE_SECOND_HALF=
+			"<p>&nbsp;</p>" +
+			"<p>&nbsp;</p>" +
+			"<center><img src=\"http://s11.postimg.org/97dahnc2r/fixedit_logo.jpg\"/></center>";
 }
