@@ -21,7 +21,7 @@ public class Authenticator extends EmailSender {
 	public boolean isValidPassword(String password){
 		if(password.length()>=8){
 			for(int i=0; i<password.length(); i++){
-				if(!allowedChars.contains(""+password.charAt(i))){
+				if(!allowedChars.contains(Character.toString(password.charAt(i)))){
 					return false;
 				}
 			}
