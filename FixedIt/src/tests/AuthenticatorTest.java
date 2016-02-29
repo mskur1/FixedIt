@@ -8,10 +8,16 @@ import org.junit.Test;
 import Model.Authenticator;
 
 public class AuthenticatorTest {
-	Authenticator a;
+	private Authenticator a;
+	private String validPass;
+	private String validPass2;
+	private String invalidPass;
 	
 	@Before
 	public void setUp() throws Exception {
+		validPass="ThisIsAPassword!-._";
+		invalidPass="ThisIsAnInvalidPass/?@#";
+		validPass2="ThisIsAlsoAPassword!!!---...___";
 		a=new Authenticator();
 	}
 
@@ -37,8 +43,7 @@ public class AuthenticatorTest {
 
 	@Test
 	public void testIsValidPassword() {
-		String validPass="ThisIsAPassword!-._";
-		String invalidPass="ThisIsAnInvalidPass/?@#";
+		
 		assertTrue(a.isValidPassword(validPass));
 		assertFalse(a.isValidPassword(invalidPass));
 	}
@@ -50,8 +55,6 @@ public class AuthenticatorTest {
 
 	@Test
 	public void testSaltHashPassword() {
-		String validPass="ThisIsAPassword!-._";
-		String validPass2="ThisIsAlsoAPassword!!!---...___";
 		String hash1=a.saltHashPassword(validPass);
 		String hash2=a.saltHashPassword(validPass2);
 		
@@ -66,8 +69,6 @@ public class AuthenticatorTest {
 	
 	@Test
 	public void testValidatePassword(){
-		String validPass="ThisIsAPassword!-._";
-		String validPass2="ThisIsAlsoAPassword!!!---...___";
 		String hash1=a.saltHashPassword(validPass);
 		String hash2=a.saltHashPassword(validPass2);
 		

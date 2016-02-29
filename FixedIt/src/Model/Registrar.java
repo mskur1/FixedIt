@@ -76,7 +76,7 @@ public class Registrar {
 					course.setTitle(data[2]);
 					course.setCredits(Double.parseDouble(data[3]));
 					course.setType(data[4]);
-					course.setTime(data[5]);
+					course.setTime(data[5].replace(" ", ""));
 					course.addLocation(data[6]);
 					course.addInstructor(data[7]);
 					course.setCapacity(Integer.parseInt(data[8].substring(1)));
@@ -91,7 +91,7 @@ public class Registrar {
 					course.setCredits(Double.parseDouble(data[3]));
 					course.setType(data[4]);
 					course.setDays(data[5]);
-					course.setTime(data[6]);
+					course.setTime(data[6].replace(" ", ""));
 					course.addLocation(data[7]);
 					course.addInstructor(data[8]);
 					course.setCapacity(Integer.parseInt(data[9].substring(1)));

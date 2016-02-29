@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Course {
 	private int CRN, capacity, seatsRemain, seatsFilled;
-	double credits;
+	private double credits;
 	private String courseAndSection, title, type, days, time, beginEnd;
 	private ArrayList<String> instructors, locations;
 	
@@ -27,6 +27,12 @@ public class Course {
 		this.locations.add(location);
 		this.beginEnd=beginEnd;
 	}
+	
+	public Course(){
+		locations=new ArrayList<String>();
+		instructors=new ArrayList<String>();
+	}
+	
 	@Override
 	public String toString() {
 		return "Course [CRN=" + CRN + ", courseAndSection=" + courseAndSection + ", title=" + title + ", credits="
@@ -34,11 +40,44 @@ public class Course {
 				+ ", instructors=" + instructors + ", capacity=" + capacity + ", seatsRemain=" + seatsRemain
 				+ ", seatsFilled=" + seatsFilled + ", beginEnd=" + beginEnd + "]";
 	}
-	public Course(){
-		locations=new ArrayList<String>();
-		instructors=new ArrayList<String>();
+	
+	/**
+	 * Populates a String with this Course's data in CSV format
+	 * for writing to a CSV file
+	 * @return String in CSV format of the Course's data
+	 */
+	public String toCSVLine(){
+		return CRN + ", " + courseAndSection + ", " + title + ", " + credits + ", " + type + ", " + days + ", " +
+				time + ", " + locations + ", " + instructors + ", " + capacity + ", " + seatsRemain
+				+ ", " + seatsFilled + ", " + beginEnd;
 	}
 	
+	/**
+	 * Calculate the time interval of this course,
+	 * expressed as the number of minutes away
+	 * from midnight (for easy overlap checking)
+	 * @return TimeInterval the TimeInterval of this class
+	 */
+	public TimeInterval getTimeAsTimeInverval(){
+		String startAsString=this.time.split("-")[0];
+		String endAsString=this.time.split("-")[1];
+		boolean startIsPm=(startAsString.contains("PM") || startAsString.contains("pm"));
+		boolean endIsPm=(endAsString.contains("PM") || endAsString.contains("pm"));
+		int start, end;
+		if(startIsPm && Integer.parseInt(startAsString.substring(0, 2))>12){
+			start=((Integer.parseInt(startAsString.substring(0, 2))+12)*60)+Integer.parseInt(startAsString.substring(3, 5));
+		}
+		else{
+			start=(Integer.parseInt(startAsString.substring(0, 2))*60)+Integer.parseInt(startAsString.substring(3, 5));
+		}
+		if(endIsPm && Integer.parseInt(endAsString.substring(0, 2))>12){
+			end=((Integer.parseInt(endAsString.substring(0, 2))+12)*60)+Integer.parseInt(endAsString.substring(3, 5));
+		}
+		else{
+			end=(Integer.parseInt(endAsString.substring(0, 2))*60)+Integer.parseInt(endAsString.substring(3, 5));
+		}
+		return new TimeInterval(start, end);
+	}
 	
 	public void addInstructor(String instructor){
 		instructors.add(instructor);
