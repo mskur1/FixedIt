@@ -12,7 +12,7 @@ public class Query {
 	//level constants
 	public static final String LEVEL_UNDERGRAD							="A";
 	public static final String LEVEL_GRADUATE							="M";
-	public static final String LEVEL_EVENING_AND_SATURDAY_UNDERGRAD	="E";
+	public static final String LEVEL_EVENING_AND_SATURDAY_UNDERGRAD		="E";
 	
 	//department constants
 	public static final String	ANT_01	=	"ANT_01"	;

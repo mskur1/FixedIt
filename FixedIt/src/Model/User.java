@@ -12,8 +12,34 @@ public class User {
 	
 	private String emailAddress;
 	private TreeMap<String, Schedule> schedules;
-	private int studentStatus;
+	private int studentStatus, numSchedules;
 	private Query currentQuery;
+	
+	public User(String emailAddress, TreeMap<String, Schedule> schedules, int studentStatus){
+		this.emailAddress=emailAddress;
+		this.schedules=schedules;
+		this.studentStatus=studentStatus;
+		numSchedules=schedules.size();
+	}
+	public User(String emailAddress, TreeMap<String, Schedule> schedules){
+		this.emailAddress=emailAddress;
+		this.schedules=schedules;
+		this.studentStatus=-1;
+		numSchedules=schedules.size();
+	}
+	public User(String emailAddress, int studentStatus){
+		this.emailAddress=emailAddress;
+		this.studentStatus=studentStatus;
+		this.schedules=new TreeMap<String, Schedule>();
+		numSchedules=schedules.size();
+	}
+	public User(String emailAddress){
+		this.emailAddress=emailAddress;
+		this.schedules=new TreeMap<String, Schedule>();
+		this.studentStatus=-1;
+		numSchedules=schedules.size();
+	}
+	
 	
 	public void dispose(){
 		emailAddress=null;
@@ -21,7 +47,10 @@ public class User {
 		currentQuery=null;
 	}
 	public void createSchedule(String name){
-		schedules.put(name, new Schedule(name));
+		if(numSchedules<5){
+			schedules.put(name, new Schedule(name));
+			numSchedules++;
+		}
 	}
 	
 	public void deleteAccount(){
@@ -35,18 +64,20 @@ public class User {
 	/**
 	 * Download a schedule
 	 * @param schedule the schedule to download
-	 * @param filepath the path in which to save the file
+	 * @param filepath the path in which to save the file (not including the filename itself)
 	 * @return File a file for download
 	 */
 	public void downloadSchedule(Schedule schedule, String filepath) throws IOException{
-		File file=new File(filepath);
+		File file=new File(filepath+schedule.getName().replaceAll("[^a-zA-Z0-9.-]", "_")+".csv");
 		if(!file.exists()){
 			file.createNewFile();
 		}
+		System.out.println(file.getAbsolutePath());
 		FileWriter fw=new FileWriter(file.getAbsoluteFile());
 		BufferedWriter bw=new BufferedWriter(fw);
 		bw.write("CRN, Course and Section, Title, Credits, Type, Days, Time, Locations, Instructors, " +
 		"Capacity, Seats Open, Seats Filled, Begin/End Dates");
+		bw.newLine();
 		for(Course c : schedule.getCourses()){
 			bw.write(c.toCSVLine());
 			bw.newLine();
@@ -55,6 +86,13 @@ public class User {
 		fw.close();
 	}
 	
+	public Schedule getSchedule(String key){
+		return schedules.get(key);
+	}
+	
+	public int getNumSchedules(){
+		return numSchedules;
+	}
 	public String getEmailAddress() {
 		return emailAddress;
 	}
