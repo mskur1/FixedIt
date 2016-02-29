@@ -19,25 +19,25 @@ public class User {
 		this.emailAddress=emailAddress;
 		this.schedules=schedules;
 		this.studentStatus=studentStatus;
-		numSchedules=schedules.size();
+		this.numSchedules=schedules.size();
 	}
 	public User(String emailAddress, TreeMap<String, Schedule> schedules){
 		this.emailAddress=emailAddress;
 		this.schedules=schedules;
 		this.studentStatus=-1;
-		numSchedules=schedules.size();
+		this.numSchedules=schedules.size();
 	}
 	public User(String emailAddress, int studentStatus){
 		this.emailAddress=emailAddress;
 		this.studentStatus=studentStatus;
 		this.schedules=new TreeMap<String, Schedule>();
-		numSchedules=schedules.size();
+		this.numSchedules=schedules.size();
 	}
 	public User(String emailAddress){
 		this.emailAddress=emailAddress;
 		this.schedules=new TreeMap<String, Schedule>();
 		this.studentStatus=-1;
-		numSchedules=schedules.size();
+		this.numSchedules=schedules.size();
 	}
 	
 	

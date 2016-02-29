@@ -30,7 +30,7 @@ public class Authenticator implements EmailSender {
 	public boolean validateNewUser(User newUser){
 		return false;
 	}
-	public boolean addNewUserToDB(User newUser){
+	private boolean addNewUserToDB(User newUser){
 		return false;
 	}
 	public boolean isValidPassword(String password){
@@ -49,13 +49,14 @@ public class Authenticator implements EmailSender {
 	public boolean isValidEmailAddress(String emailAddress){
 		return false;
 	}
-	private URL requestPasswordReset(String email){
+	public URL requestPasswordReset(String email){
 		return null;
 	}
 	
 	/**
 	 * salts and hashes password; built using tutorial at
 	 * http://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/#PBKDF2WithHmacSHA1
+	 * salt+hash algorithm uses 20,000 iterations.
 	 * @param password password to salt and hash
 	 * @return salted hashed password
 	 * @throws NoSuchAlgorithmException

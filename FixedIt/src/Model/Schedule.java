@@ -32,10 +32,6 @@ public class Schedule {
 		}
 	}
 	
-	/**
-	 * get number of credits on a given schedule
-	 * @return credits the total number of credits on this schedule
-	 */
 	public int getCredits(){
 		int credits=0;
 		for(Course c : courses){

@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import Model.Course;
 import Model.Query;
-import Model.Schedule;
 import Model.User;
 
 public class UserTest {
