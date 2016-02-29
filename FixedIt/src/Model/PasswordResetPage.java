@@ -1,21 +1,25 @@
 package Model;
 
 import java.io.File;
+import java.util.Date;
 
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class PasswordResetPage implements EmailSender {
+public class PasswordResetPage extends EmailSender {
+	private String emailAddress;
+	private Date expirationDate;
+	
+	public PasswordResetPage(String emailAddress, Date expirationDate){
+		this.emailAddress=emailAddress;
+		this.expirationDate=expirationDate;
+	}
 	//not implemented yet
-	@Override
-	public boolean sendMail(InternetAddress email, MimeMessage msg) {
+	public boolean resetPassword(String password){
 		return false;
 	}
 	
-	//not implemented yet
-	@Override
-	public boolean sendMailWithAttachment(InternetAddress email, MimeMessage msg, File attachment) {
-		return false;
+	public void renew(){
+		
 	}
-
 }

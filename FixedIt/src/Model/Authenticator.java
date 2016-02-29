@@ -1,6 +1,5 @@
 package Model;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -9,23 +8,9 @@ import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
-public class Authenticator implements EmailSender {
+public class Authenticator extends EmailSender {
 	public static final String allowedChars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.-_";
-	
-	//not implemented yet
-	@Override
-	public boolean sendMail(InternetAddress email, MimeMessage msg) {
-		return false;
-	}
-	
-	//not implemented yet
-	@Override
-	public boolean sendMailWithAttachment(InternetAddress email, MimeMessage msg, File attachment) {
-		return false;
-	}
 
 	public boolean validateNewUser(User newUser){
 		return false;
