@@ -52,9 +52,4 @@ public class EmailSender {
 			return false;
 		}
 	}
-
-	// not implemented yet
-	public boolean sendMailWithAttachment(InternetAddress email, MimeMessage msg, File attachment) {
-		return false;
-	}
 }

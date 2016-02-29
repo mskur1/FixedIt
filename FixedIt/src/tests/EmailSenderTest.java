@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import Model.Authenticator;
+import Model.PasswordResetPage;
 
 public class EmailSenderTest {
 	Authenticator a;
@@ -20,9 +21,8 @@ public class EmailSenderTest {
 	@Test
 	public void testSendMail() {
 		try {
-			assertTrue(a.sendMail(new InternetAddress("mjones44@ycp.edu"), "test test test"));
+			assertTrue(a.sendMail(new InternetAddress("mjones44@ycp.edu"), PasswordResetPage.baseMessage + PasswordResetPage.endMessage));
 		} catch (AddressException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
